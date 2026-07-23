@@ -1,42 +1,37 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+void solve() {
+    int n;
+    cin >> n;
 
-    int t;
-    cin >> t;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
 
-    while (t--) {
-        int n;
-        cin >> n;
+    int bal = 0;
+    bool ok = true;
 
-        vector<long long> a(n);
+    for (int stk = 1; stk <= n; stk++) {
+        if (a[stk] >= stk) {
+            bal += (a[stk] - stk);
+        } else {
+            int needed = stk - a[stk];
 
-        for (int i = 0; i < n; i++)
-            cin >> a[i];
-
-        long long need = 1;
-        bool ok = true;
-
-        for (int i = 0; i < n; i++) {
-
-            if (a[i] < need) {
+            if (bal < needed) {
                 ok = false;
                 break;
             }
 
-            long long extra = a[i] - need;
-
-            if (i + 1 < n)
-                a[i + 1] += extra;
-
-            need++;
+            bal -= needed;
         }
-
-        cout << (ok ? "YES" : "NO") << '\n';
     }
 
+    cout << (ok ? "YES" : "NO") << endl;
+}
+
+int main() {
+    solve();
     return 0;
 }
